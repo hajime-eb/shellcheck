@@ -54,6 +54,10 @@ export async function shellcheck(
       // eslint-disable-next-line no-bitwise
       fs.constants.F_OK | fs.constants.W_OK | fs.constants.X_OK
     );
+    const { status } = child_process.spawnSync(opts.bin, ['--version']);
+    if (status !== 0) {
+      throw new Error(`ShellCheck binary '${opts.bin}' is invalid`);
+    }
   } catch {
     // Download ShellCheck
     try {
